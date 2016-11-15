@@ -1,0 +1,67 @@
+package abc;
+
+import org.drools.examples.taobao.domain.BizParam;
+import org.drools.examples.taobao.domain.NodeParam;
+
+import java.util.Map;
+
+global org.drools.examples.taobao.domain.RenderResult renderResult;
+
+
+rule "firstRule"
+salience
+159
+lock-on-active true
+no-loop true
+auto-focus true
+agenda-group "detail_agenda"
+activation-group "custom1"
+when
+//	$bizParam : BizParam(client == "taobao",version == "1.0.0")
+    $bizParam : BizParam(true)
+	$client : String($client == "taobao") from $bizParam.client
+	$version : String($version == "1.0.0") from $bizParam.version
+
+then
+	renderResult.setResult("first");
+	renderResult.insertComponent(2,3,"entance","jhs");
+end
+
+
+rule "secondRule"
+salience
+120
+lock-on-active true
+no-loop true
+auto-focus true
+agenda-group "detail_agenda"
+activation-group "custom2"
+when
+//	$bizParam : BizParam(client == "taobao", platform == "ipad")
+    $bizParam : BizParam(true)
+	$client : String($client == "taobao") from $bizParam.client
+	$platform : String($platform == "ipad") from $bizParam.platform
+
+then
+	renderResult.setResult("second");
+	renderResult.insertComponent(2,4,"entance","tmall");
+end
+
+rule "thirdRule"
+salience
+120
+lock-on-active true
+no-loop true
+auto-focus true
+agenda-group "detail_agenda"
+activation-group "custom3"
+when
+//	$bizParam : BizParam(client == "taobao", platform == "ipad")
+    $bizParam : BizParam(true)
+	$platform : String($platform == "ipad") from $bizParam.platform
+//	$nodeParam: NodeParam(param1 == "testValue1")
+then
+	renderResult.setResult("second");
+	renderResult.insertComponent(2,4,"entance","tmall");
+end
+
